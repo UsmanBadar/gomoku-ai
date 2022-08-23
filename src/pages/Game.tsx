@@ -39,7 +39,6 @@ export default function Game(props:GameReset) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(()=>{
-    console.log(state);
     if(state['result'] === 'continue' || state['result'] === ""){
       setCompleted(false);
     }else{
