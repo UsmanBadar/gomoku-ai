@@ -1,0 +1,42 @@
+.nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: white;
+    align-items: center;
+    border: 0.125rem solid black; 
+    padding: 0 1.25rem;
+}
+
+.banner{
+    text-transform: uppercase;
+    height: 4.375rem;
+    width: 8.125rem;
+    margin: 1.565rem;
+    text-align: center;
+    background-color:#4F58DF;
+    color: yellow;
+    border: solid 3px black;
+}
+
+.banner:hover{
+    color: white;
+    cursor: pointer;
+}
+
+.navList{
+    list-style-type: none;
+    width: 8.125rem;
+    margin: 0;
+    padding: 0;
+}
+
+.navListItem{
+    font-weight: bold;
+    display: inline; 
+    color:#4F58DF  
+}
+.navListItem:hover{
+    cursor: pointer;
+    color: #16437E;
+}
