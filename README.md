@@ -14,6 +14,10 @@ This program is a web application of Gomoku game including:
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+## yarn install
+
+This will add the dependencies of the project
 ## Available Scripts
 
 In the project directory, you can run:
