@@ -18,10 +18,11 @@ export default function GameLog() {
   
   if(keys.length > 0){
     const id  = keys.find((item)=> item === param.id) as string;
-    console.log(userGames[id]);
     const boardLog = userGames[id]['virtualBoard'];
+    const result = userGames[id]['result'];
     return(
         <div className={style.gameLogContainer}>
+          <p>{result}</p>
         <div className={style.gameLogBoard}>
         {boardLog.map((gameItem, row)=>
             <div className= {style.gameLogRow} key = {row}>

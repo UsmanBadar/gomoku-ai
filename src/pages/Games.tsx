@@ -10,7 +10,6 @@ export default function Games() {
   const [userGames, ] = useLocalStorage<Record<string, GameState>>("UserGames",{});
   const navigate = useNavigate();
   const keys = Object.keys(userGames)
-  console.log(keys);
   if(!user){return <Navigate to='/login' replace />}
     
   if(keys.length > 0){
