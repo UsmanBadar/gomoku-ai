@@ -4,6 +4,7 @@ import style from './Home.module.css';
 import {Input, Button, Message} from '../components';
 import {UserContext} from '../context';
 
+// Home page
 
 export default function Navbar() {
   const [width, setWidth] = useState<number>(0);
@@ -24,6 +25,7 @@ export default function Navbar() {
       navigate('/login');
     } 
   }
+
   return (
     <div className={style.home}>
       <div className = {style.message}>
