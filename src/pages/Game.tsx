@@ -1,60 +1,46 @@
 import React, { useState, useEffect, useReducer, useContext } from 'react';
+import { useLocalStorage } from '../hooks';
 import { UserContext } from '../context';
-import { Square, Message, Button } from '../components';
+import { Square, Message} from '../components';
 import { checkGameStatus } from '../utilis/checkGameStatus';
 import style from './Game.module.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
+import {PlayerAction, GameState, GameReset} from '../types';
 
-type gameState = {
-    virtualBoard: Move [][];
-    result: string;
-}
 
-type playerAction = {
-    player: string;
-    turn: number;
-    row: number;
-    column: number;
-}
-
-type Move = {
-  player: string;
-  turn: number;
-}
-
-type localStorage ={
-  userGames:Record<string, gameState>;
-  setUserGames: any
-}
-
-function reducer(state: gameState, action: playerAction): gameState {
+function reducer(state: GameState, action: PlayerAction): GameState {
 
   const { player, turn, row, column } = action;
-  const {virtualBoard} = state;
+  const {date, virtualBoard} = state;
   let newVirtualBoard = virtualBoard;
   newVirtualBoard[row][column]= {player, turn};
   const outcome :string = checkGameStatus(newVirtualBoard, player);
-  state = {virtualBoard:newVirtualBoard, result: outcome}
+  state = {date, virtualBoard:newVirtualBoard, result: outcome}
   
   return state;
 }
 
-export default function Game(props:localStorage) {
+export default function Game(props:GameReset) {
+  const {gameKey, setGameKey} = props;
+  const [userGames, setUserGames] = useLocalStorage<Record<string, GameState>>("UserGames",{});
   const [completed, setCompleted] = useState<boolean>(false);
   const [player, setPlayer] = useState<string>('black');
   const [turn, setTurn] = useState<number>(1);
-  const {boardWidth} = useContext(UserContext);
+  const {user, boardWidth} = useContext(UserContext);
   const navigate = useNavigate();
  
-  const initialState : gameState = {
+  const initialState : GameState = {
+    date : new Date().toDateString(),
     virtualBoard: new Array(boardWidth).fill([]).map(() => 
       new Array(boardWidth).fill({player: "", turn: 0})),
     result: '',
   };
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(()=>{
-    if(state['result'] === 'continue'){
+    console.log(state);
+    if(state['result'] === 'continue' || state['result'] === ""){
       setCompleted(false);
     }else{
       setCompleted(true);
@@ -63,40 +49,50 @@ export default function Game(props:localStorage) {
 
   const handleLeaveClick = ():void=>{
     if(completed){
-      const {userGames, setUserGames} = props;
       const keys = Object.keys(userGames);
       const id = keys.length + 1;
-      setUserGames({...userGames, [id]:state})
+      setUserGames({...userGames, [id]:state});
+      navigate('/games');
+    }else{
+      navigate('/');
     }
   } 
-
+  if(!user){return <Navigate to='/' replace />}
+  
   return ( 
-    <>
-    {completed && < Message variant='info' message ={state['result']} />}
-    {!completed && < Message variant='info' message ={`${player} has turn`} />}
-    <div className={style.board}>
-      {[...Array(boardWidth)].map((_, row) =>
-        <div key={row} className = {style.row}>
-        {[...Array(boardWidth)].map((_, column) => (
-          <Square
-            key={`${row}-${column}`}
-            row={row}
-            column={column}
-            selected={false}
-            player={player}
-            setPlayer={setPlayer}
-            turn={turn}
-            setTurn={setTurn}
-            dispatch={dispatch}
-            
-          />
-        ))}
+    <div className={style.gameContainer} >
+      <div className={style.gameMessage}>
+        {completed && <Message variant='info' message ={state['result']} />}
+        {!completed && <Message variant='info' message ={`Current Player: ${player[0].toUpperCase()}${player.substring(1)}`} />}
+      </div>
+      <div className={`${style.gameBoard} ${completed && style.completed}`}>
+        {[...Array(boardWidth)].map((_, row) =>
+          <div key={row} className = {style.gameRow}>
+          {[...Array(boardWidth)].map((_, column) => (
+            <Square
+              key={`${row}-${column}`}
+              row={row}
+              column={column}
+              selected={false}
+              player={player}
+              setPlayer={setPlayer}
+              turn={turn}
+              setTurn={setTurn}
+              dispatch={dispatch}
+            />
+          ))}
+          </div>
+        )}
         </div>
-      )}
-      <Button onClick = {()=> handleLeaveClick()}>Leave</Button>
-      <Button onClick = {()=>navigate('/')}>Reset</Button>
+        <div className={style.gameButtons}>
+          <div className={style.gameButtonLeave}>
+            <button onClick = {()=> handleLeaveClick()}>Leave</button>
+          </div>
+          <div className={style.gameButtonReset}>
+            <button onClick = {()=>setGameKey(gameKey + 1)}>Reset</button>
+          </div>
+        </div>
     </div>
-    </>
   );
 }
 
