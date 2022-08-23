@@ -2,6 +2,7 @@ import React, {useState, useContext} from 'react';
 import {Message, Input, Button} from '../components';
 import {UserContext} from '../context';
 import {useNavigate} from 'react-router-dom';
+import style from './Login.module.css';
 
 export default function Login(){
   const {login} = useContext(UserContext);
@@ -11,7 +12,7 @@ export default function Login(){
   const navigate = useNavigate();
 
   const handleFormSubmit = ()=>{
-    if(username === 'awp' && password === 'awp'){
+    if(username === 'admin' && password === 'admin'){
       login(username);
       setUsername("");
       setPassword("");
@@ -24,12 +25,15 @@ export default function Login(){
   }
 
   return(
-    <div>
+    <div className = {style.inputContainer}>
+      <div className={style.inputMessage}>
     {credentialsInvalid && < Message variant="error" message = "Invalid username or password"/>}
-    <form onSubmit = {(e)=>{
+      </div>
+    <form className = {style.inputForm} onSubmit = {(e)=>{
       e.preventDefault();
       handleFormSubmit()
       }}>
+      
 
       <Input
         name = "username"
