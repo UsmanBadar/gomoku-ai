@@ -1,5 +1,4 @@
 Author: Usman Badar
-Email: mbadar@myune.edu.au
 
 # Gomoku Game
 
