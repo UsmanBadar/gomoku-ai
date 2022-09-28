@@ -1,8 +1,8 @@
 Author: Usman Badar
 
-# Gomoku Game
+# Gomoku Game Board Simulation:
 
-This program is a web application of Gomoku game including:
+This program is a web application of Gomoku game board simulation including:
 1. User authentication with username (admin) and password (admin)
 2. Ability to set Board width
 3. Gomoku game
