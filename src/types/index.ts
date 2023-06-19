@@ -1,3 +1,4 @@
+export * from './Move';
 export * from './PlayerAction';
 export * from './SquarePorpsType';
 export * from './SquareLogPropsType';

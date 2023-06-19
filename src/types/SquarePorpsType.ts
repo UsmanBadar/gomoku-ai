@@ -1,5 +1,10 @@
 import { PlayerAction } from "./PlayerAction";
 
+type Move = {
+  player: string;
+  turn: number;
+}
+
 export type SquarePropsType ={
     row : number;
     column : number;
@@ -9,4 +14,5 @@ export type SquarePropsType ={
     turn : number;
     setTurn : React.Dispatch<React.SetStateAction<number>>;
     dispatch: React.Dispatch<PlayerAction>;
+    boardState: Move[][]
   }

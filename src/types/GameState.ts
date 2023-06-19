@@ -3,6 +3,7 @@
 type Move = {
     player: string;
     turn: number;
+    score: number;
   }
 
 export type GameState = {

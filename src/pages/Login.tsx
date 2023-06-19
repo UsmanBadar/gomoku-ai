@@ -26,8 +26,9 @@ export default function Login(){
 
   return(
     <div className = {style.inputContainer}>
+      
       <div className={style.inputMessage}>
-    {credentialsInvalid && < Message variant="error" message = "Invalid username or password"/>}
+        {credentialsInvalid && < Message variant="error" message = "Invalid username or password"/>}
       </div>
     <form className = {style.inputForm} onSubmit = {(e)=>{
       e.preventDefault();
@@ -37,14 +38,14 @@ export default function Login(){
 
       <Input
         name = "username"
-        placeholder = "Username"
+        placeholder = "Username: admin"
         value = {username}
         onChange = {(e)=>{setUsername(e.target.value); setCredentialsInvalid(false);}}
       />
 
       <Input
         name="password"
-        placeholder = "Password"
+        placeholder = "Password: admin"
         type= "password"
         value={password}
         onChange = {(e)=>{setPassword(e.target.value); setCredentialsInvalid(false);}}
