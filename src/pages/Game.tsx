@@ -16,10 +16,7 @@ function reducer(state: GameState, action: PlayerAction): GameState {
   newVirtualBoard[row][column]= {player, turn};
   const outcome :string = checkGameStatus(newVirtualBoard, player);
   return {date, virtualBoard:newVirtualBoard, result: outcome};
-  
-  
 }
-
 
 export default function Game(props:GameReset) {
   const {gameKey, setGameKey} = props;
@@ -39,8 +36,6 @@ export default function Game(props:GameReset) {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-
-
   useEffect(()=>{
     if(state['result'] === 'continue' || state['result'] === ""){
       setCompleted(false);
@@ -57,22 +52,14 @@ export default function Game(props:GameReset) {
       setPlayer('black');
     }
   }, [player, turn, boardWidth, state, dispatch]);
-  
-  
-  
-  
 
   useEffect(() => {
     if (turn === 1 && player === 'white') {
       makeAiMove();
     } else if (player === 'white' && !completed && state['result'] === 'continue') {
-      setTimeout(makeAiMove, 500); // AI makes its move after a delay of 500ms
+      setTimeout(makeAiMove, 100); 
     }
   }, [player, completed, boardWidth, state, turn, dispatch, makeAiMove]);
-  
-  useEffect(() => {
-    console.log('Current player:', player);
-  }, [player]);
 
   const handleLeaveClick = ():void=>{
     if(completed){

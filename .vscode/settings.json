@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/33bdcfe2-641d-4512-95b7-c326ad187f06/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/gomoku-ai-usman",
+    "appService.deploySubpath": "build"
+}
